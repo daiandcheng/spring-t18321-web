@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="3.0"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	<!-- 配置上下文参数 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring/applicationContext.xml</param-value>
+	</context-param>
+	<!-- 使用监听器，来启动spring 容器 -->
+	<listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!-- 配置前端控制器，DispatcherServlet -->
+	<servlet>
+        <servlet-name>springmvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!-- 初始化参数 -->
+        <init-param>
+       		 <!-- spring MVC框架的配置信息 -->
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring/spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>springmvc</servlet-name>
+        <!-- 
+        	过滤路径有两种写法：
+        	1.*.action  只要是以.action结尾的请求，都交给前端控制器进行处理
+        	2.<url-pattern>/</url-pattern>，这代表所有的请求都要给前端控制器来进行处理，包括（静态资源），它能够实现restfull方式的调用
+        	3. <url-pattern>/*</url-pattern> 注意springMVC中没有这种写法
+         -->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+     <!-- 配置一个处理post请求的中文乱码的过滤器 -->
+    <filter>
+    	<filter-name>encondingFilter</filter-name>
+    	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    	<init-param>
+    		<param-name>encoding</param-name>
+    		<param-value>UTF-8</param-value>
+    	</init-param>
+    </filter>
+    <filter-mapping>
+    	<filter-name>encondingFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- 使用restfull编程风格，我们要将post请求转换成PUT/DELETE请求 -->
+    <filter>
+    	<filter-name>hiddenHttpMethodFilter</filter-name>
+    	<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>
+      <filter-mapping>
+    	<filter-name>hiddenHttpMethodFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+    	<filter-name>FormContentFilter</filter-name>
+    	<filter-class>org.springframework.web.filter.FormContentFilter</filter-class>
+    </filter>
+      <filter-mapping>
+    	<filter-name>FormContentFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+    </filter-mapping>
+</web-app>

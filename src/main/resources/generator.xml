@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+   <commentGenerator>
+	  <property name="suppressAllComments" value="true" />
+	</commentGenerator>
+   <!-- 创建数据库的链接 -->
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql:///t18318"
+        userId="root"
+        password="root">
+    </jdbcConnection>
+	<!-- java类型转换器 -->
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+	<!-- 指定模型的生成位置 -->
+    <javaModelGenerator targetPackage="com.edu.bean" targetProject=".\src\main\java">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+	<!-- 指定映射文件的生成位置 -->
+    <sqlMapGenerator targetPackage="mapper"  targetProject=".\src\main\resources">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+	<!-- 指定mapper接口的生成位置 -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.edu.mapper"  targetProject=".\src\main\java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+   <!--  <table tableName="department" domainObjectName="Department"></table>
+    <table tableName="employee" domainObjectName="Employee"></table> -->
+   <!--  <table tableName="customer" domainObjectName="Customer"></table> -->
+   <table tableName="students" domainObjectName="Student"></table>
+  </context>
+</generatorConfiguration>
